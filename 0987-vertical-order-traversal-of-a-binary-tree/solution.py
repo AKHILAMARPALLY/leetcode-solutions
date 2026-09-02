@@ -1,0 +1,33 @@
+class Solution:
+    def verticalTraversal(self, root):
+        nodes = []
+
+        def dfs(node, row, col):
+            if not node:
+                return
+
+            nodes.append((col, row, node.val))
+
+            dfs(node.left, row + 1, col - 1)
+            dfs(node.right, row + 1, col + 1)
+
+        dfs(root, 0, 0)
+
+        # Sort by:
+        # 1. column
+        # 2. row
+        # 3. value
+        nodes.sort()
+
+        result = []
+        prev_col = None
+
+        for col, row, value in nodes:
+            if col != prev_col:
+                result.append([])
+                prev_col = col
+
+            result[-1].append(value)
+
+        return result
+        
